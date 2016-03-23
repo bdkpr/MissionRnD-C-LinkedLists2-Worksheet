@@ -12,12 +12,40 @@ NOTES:
 */
 
 #include <stdio.h>
+#include <malloc.h>
 
 struct node {
 	int num;
 	struct node *next;
 };
 
+void insertion_first(struct node **, int);
+
 struct node * reverseLinkedList(struct node *head) {
-	return NULL;
+	if (head == NULL){			//validation check
+		return NULL;
+	}
+	struct node *reverse_head,*p=head;
+	reverse_head = NULL;
+	if (p != NULL){							/* for reversing the linked list,here i fallowed insertion first logic*/
+		insertion_first(&reverse_head, p->num);
+		p = p->next;
+	}
+	for (; p != NULL;p=p->next){
+		insertion_first(&reverse_head, p->num);		//insertion first.
+	}
+	return reverse_head;						//returning the reversed linked list.
+}
+
+void insertion_first(struct node **h, int data){				//insertion first body.
+	struct node *temp = (struct node *)malloc(sizeof(struct node));
+	temp->num = data;
+	temp->next = NULL;
+	if (*h == NULL){
+		*h = temp;
+	}
+	else{
+		temp->next = *h;
+		*h = temp;
+	}
 }

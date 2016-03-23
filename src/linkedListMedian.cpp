@@ -20,5 +20,28 @@ struct node {
 };
 
 int linkedListMedian(struct node *head) {
-	return -1;
+	if (head == NULL){							//validation
+		return -1;
+	}
+	struct node *short_node,*long_node,*previous;
+	int median;
+	previous=short_node = long_node=head;  
+	/*here long_node moves 2 steps each time 
+	       short node moves one step and 
+		   previous node will hold the previous node of the short_node
+	 For odd length loop will terminate when "long_node->next==NULL"
+	 For even length loop will terminate at "long_node==NULL"
+    */
+	for (; long_node != NULL&&long_node->next != NULL; ){		
+		previous = short_node;
+		short_node = short_node->next;
+		long_node = long_node->next->next;
+	}
+	if (long_node==NULL){					//for even length median is avg of middle pair of numbers.
+		median = (short_node->num + previous->num) / 2;
+	}
+	else{
+		median = short_node->num;
+	}
+	return median;
 }
